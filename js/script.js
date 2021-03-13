@@ -26,6 +26,21 @@ const getQuotes = async () => {
     //  console.log(data);
     displayQuotes();
     newQuoteBtn.addEventListener('click', displayQuotes);
+
+    
+    let interval;
+    document.querySelector("input[type=checkbox]").addEventListener("change", function() {
+      if(this.checked == true){
+        newQuoteBtn.style.display = "none";
+        interval = setInterval(displayQuotes,5000);
+        
+      }
+      else{
+        newQuoteBtn.style.display = "block";
+        clearInterval(interval);
+      }
+    }, false);
+
   }
   catch (error) {
     console.log(`Error is : ${error}`);
@@ -38,16 +53,20 @@ let colors = ["#333", "#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#6
 const displayQuotes = () => {
   let spin = document.querySelector('.spin');
   spin.style.display = "none";
+
   let icons = document.querySelectorAll('.quotes-icon');
   icons.forEach(element => {
     element.style.display = "inline-block";
   });
+
   let button_initial = document.querySelectorAll('.buttons');
   button_initial.forEach(element => {
     element.style.display = "block";
   });
+
   let authorName = document.querySelector('.quote-author');
   authorName.style.display = "block";
+
   let colorToUse;
   if (count == 0) {
     colorToUse = "#333";
@@ -61,8 +80,10 @@ const displayQuotes = () => {
     element.style.backgroundColor = colorToUse;
   });
   document.body.style.color = colorToUse;
+
   text.innerHTML = data[count].text;
   author.innerHTML = data[count].author;
+
   tweet();
   count += 1;
 
